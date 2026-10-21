@@ -7,8 +7,6 @@ pipeline {
         IMAGE_TAG      = "v${BUILD_NUMBER}"
     }
 
-    triggers { githubPush() }   // GitHub webhook -> pipeline starts automatically
-
     stages {
         stage('Checkout') {
             steps { checkout scm }
