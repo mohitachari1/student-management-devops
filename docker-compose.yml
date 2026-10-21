@@ -1,0 +1,33 @@
+# Monitoring stack. The app container is deployed by Jenkins on the same network.
+#   docker network create devops-net   (once)
+#   docker compose up -d
+services:
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    networks: [devops-net]
+    ports: ["9100:9100"]
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    networks: [devops-net]
+    ports: ["9090:9090"]
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alert_rules.yml:/etc/prometheus/alert_rules.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    networks: [devops-net]
+    ports: ["3000:3000"]
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+
+networks:
+  devops-net:
+    external: true

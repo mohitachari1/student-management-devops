@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}
+<h1>Students</h1>
+<table><tr><th>ID</th><th>Name</th><th>Email</th><th>Course</th><th>Actions</th></tr>
+{% for s in students %}
+<tr><td>{{ s.id }}</td><td>{{ s.name }}</td><td>{{ s.email }}</td><td>{{ s.course }}</td>
+<td><a href="/edit/{{ s.id }}">Edit</a>
+<form method="post" action="/delete/{{ s.id }}" style="display:inline"><button>Delete</button></form></td></tr>
+{% else %}<tr><td colspan="5">No students yet.</td></tr>{% endfor %}
+</table>
+{% endblock %}

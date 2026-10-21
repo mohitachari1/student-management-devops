@@ -1,0 +1,17 @@
+groups:
+  - name: devops-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 80
+        for: 1m          # use 5m in production; 1m keeps the demo short
+        labels: { severity: warning }
+        annotations:
+          summary: "CPU usage above 80%"
+          description: "CPU has been above 80% for more than 1 minute."
+      - alert: ApplicationDown
+        expr: up{job="student-app"} == 0
+        for: 30s
+        labels: { severity: critical }
+        annotations:
+          summary: "Student application is DOWN"
+          description: "Prometheus cannot scrape student-app:5000."

@@ -1,0 +1,7 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Student Management</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<nav><a href="/">Home</a><a href="/students">Students</a><a href="/add">Add Student</a></nav>
+<main>{% block content %}{% endblock %}</main>
+</body></html>
