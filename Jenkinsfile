@@ -20,9 +20,9 @@ pipeline {
         stage('Build') {
             steps { sh '. venv/bin/activate && python -m py_compile app.py' }
         }
-        stage('Test') {            // pipeline STOPS here if any test fails
-            steps { sh '. venv/bin/activate && pytest -v --junitxml=report.xml' }
-            post { always { junit 'report.xml' } }
+stage('Test') {            // pipeline STOPS here if any test fails
+    steps { sh '. venv/bin/activate && pytest -v' }
+}
         }
         stage('Docker Build') {
             steps { sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG -t $IMAGE_NAME:latest .' }
