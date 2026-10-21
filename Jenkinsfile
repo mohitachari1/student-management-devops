@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER = 'mohitachari2425'          // <-- change
+        DOCKERHUB_USER = 'mohitachari1'          // <-- change
         IMAGE_NAME     = "${DOCKERHUB_USER}/student-management"
         IMAGE_TAG      = "v${BUILD_NUMBER}"
     }
