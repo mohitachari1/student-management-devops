@@ -1,8 +1,11 @@
+cd C:\Users\Mohit\Downloads\student-management-devops\student-management-devops
+$u = 'mohitachari225'
+$j = @'
 pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER = 'mohitachari1'          // <-- change
+        DOCKERHUB_USER = 'mohitachari225'
         IMAGE_NAME     = "${DOCKERHUB_USER}/student-management"
         IMAGE_TAG      = "v${BUILD_NUMBER}"
     }
@@ -20,9 +23,8 @@ pipeline {
         stage('Build') {
             steps { sh '. venv/bin/activate && python -m py_compile app.py' }
         }
-stage('Test') {            // pipeline STOPS here if any test fails
-    steps { sh '. venv/bin/activate && pytest -v' }
-}
+        stage('Test') {
+            steps { sh '. venv/bin/activate && pytest -v' }
         }
         stage('Docker Build') {
             steps { sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG -t $IMAGE_NAME:latest .' }
@@ -49,3 +51,8 @@ stage('Test') {            // pipeline STOPS here if any test fails
         failure { echo 'Pipeline failed - deployment skipped.' }
     }
 }
+'@
+$j.Replace('USER_HERE', $u) | Set-Content Jenkinsfile -Encoding ascii
+git add .
+git commit -m "Set Docker Hub username"
+git push
