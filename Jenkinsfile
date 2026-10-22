@@ -1,6 +1,3 @@
-cd C:\Users\Mohit\Downloads\student-management-devops\student-management-devops
-$u = 'mohitachari225'
-$j = @'
 pipeline {
     agent any
 
@@ -51,8 +48,3 @@ pipeline {
         failure { echo 'Pipeline failed - deployment skipped.' }
     }
 }
-'@
-$j.Replace('USER_HERE', $u) | Set-Content Jenkinsfile -Encoding ascii
-git add .
-git commit -m "Set Docker Hub username"
-git push
